@@ -1,13 +1,13 @@
-package com.AmusementAce;
+package com.EaseAmuse;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AmusementAceApplication {
+public class EaseAmuseApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AmusementAceApplication.class, args);
+		SpringApplication.run(EaseAmuseApplication.class, args);
 	}
 
 }
