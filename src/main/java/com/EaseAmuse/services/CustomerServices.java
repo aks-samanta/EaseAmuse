@@ -18,7 +18,7 @@ public interface CustomerServices {
 	
 	List<CustomerOutputDto> getCustomersDetails() throws CustomerException;
 	
-	CustomerOutputDto getValidateCustomer(String userName, String password) throws CustomerException;
+	
 	
 
 }
