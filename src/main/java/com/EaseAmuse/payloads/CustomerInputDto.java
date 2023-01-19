@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CustomerInputDTO {
+public class CustomerInputDto {
 
 	@NotEmpty
 	@Size(min = 3, max = 30, message = "Customer name length should be 3 to 30 characters long")
