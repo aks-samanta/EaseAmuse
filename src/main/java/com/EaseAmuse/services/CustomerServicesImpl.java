@@ -1,5 +1,8 @@
 package com.EaseAmuse.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,13 +54,43 @@ public class CustomerServicesImpl implements CustomerServices{
 		Customer updatedCustomer = this.customerRepo.save(foundCustomer);
 		
 		return this.modelMapper.map(updatedCustomer, CustomerOutputDto.class);
+
 	}
 
 	@Override
 	public CustomerOutputDto deleteCustomer(Integer customerId) throws CustomerException {
 		// TODO Auto-generated method stub
-		return null;
+		Customer foundCustomer =  this.customerRepo.findById(customerId).orElseThrow(() -> new CustomerException("customer not found"));
+		
+		
+		 this.customerRepo.delete(foundCustomer);
+		return this.modelMapper.map(foundCustomer, CustomerOutputDto.class);
 	}
+
+	@Override
+	public List<CustomerOutputDto> getCustomersDetails() throws CustomerException {
+		// TODO Auto-generated method stub
+		List<Customer> lc = this.customerRepo.findAll();
+		
+		if(lc.isEmpty()) {
+			throw new CustomerException("no customer available.");
+		}
+		
+		List<CustomerOutputDto> listOfDtos = new ArrayList<>();
+		for (Customer customer : lc) {
+			 listOfDtos.add(new CustomerOutputDto(customer.getCustomerId(),customer.getCustomerName(),customer.getEmail(),customer.getMobile()));
+		}
+		
+		return listOfDtos;
+		//return this.modelMapper.map(listOfDtos, CustomerOutputDTO.class);
+	}
+
+	@Override
+	public CustomerOutputDto getValidateCustomer(String userName, String password) throws CustomerException {
+
+	}
+
+	
 
 	
 
