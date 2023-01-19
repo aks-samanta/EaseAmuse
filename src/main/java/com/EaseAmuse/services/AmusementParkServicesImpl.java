@@ -2,17 +2,23 @@ package com.EaseAmuse.services;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
+import com.EaseAmuse.models.Manager;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
+import com.EaseAmuse.repositories.ManagerRepo;
 
 public class AmusementParkServicesImpl implements AmusementParkServices {
 
+	@Autowired
+	private ManagerRepo managerRepo;
+
 	@Override
 	public AmusementParkOutputDto createAmusementPark(AmusementParkInputDto ParkDto) {
-		
-		
-		
+//		Manager manager = this.ma	
+
 		return null;
 	}
 

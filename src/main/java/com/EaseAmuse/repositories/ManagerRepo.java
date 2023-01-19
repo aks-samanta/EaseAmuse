@@ -1,5 +1,9 @@
 package com.EaseAmuse.repositories;
 
-public class ManagerRepo {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.EaseAmuse.models.Manager;
+
+public interface ManagerRepo extends JpaRepository<Manager, Integer> {
 
 }
