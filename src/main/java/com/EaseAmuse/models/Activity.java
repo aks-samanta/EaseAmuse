@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -18,18 +20,21 @@ import lombok.Setter;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
 @Getter
-public class Customer {
+@Setter
+public class Activity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer customerId;
-	private String customerName;
-	private String email;
-	private String mobile;
-	private String password;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-	List<Booking> bookings = new ArrayList<>();
+	private Integer activityId;
+	private String activityName;
+	private String description;
+	private Double charges;
+
+	@ManyToOne
+	@JoinColumn(name = "parkId")
+	private AmusementPark amusementPark;
+
+	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+	private List<DailyActivity> dailyActivities = new ArrayList<>();
 }
