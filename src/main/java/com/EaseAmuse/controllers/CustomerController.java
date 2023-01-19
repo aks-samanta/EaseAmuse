@@ -54,11 +54,5 @@ public class CustomerController {
 		return new ResponseEntity<CustomerOutputDto>(this.customerServices.deleteCustomer(customerId), HttpStatus.OK);
 	}
 	
-	@GetMapping("customer")
-	public ResponseEntity<CustomerOutputDto> updateCustomer(@Valid @RequestBody CustomerInputDto customerInputDTO,
-			@PathVariable("customerId") Integer customerId) {
-
-		return new ResponseEntity<CustomerOutputDto>(this.customerServices.updateCustomer(customerId, customerInputDTO),
-				HttpStatus.OK);
-	}
+	
 }
