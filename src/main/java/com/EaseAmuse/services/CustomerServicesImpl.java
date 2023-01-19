@@ -1,9 +1,10 @@
 package com.EaseAmuse.services;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class CustomerServicesImpl {
 
-	public CustomerServicesImpl() {
-		// TODO Auto-generated constructor stub
-	}
+	
 
 }
