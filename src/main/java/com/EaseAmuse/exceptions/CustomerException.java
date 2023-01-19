@@ -1,6 +1,6 @@
 package com.EaseAmuse.exceptions;
 
-public class CustomerException extends RuntimeException{
+public class CustomerException extends RuntimeException {
 
 	public CustomerException() {
 		super();
@@ -12,5 +12,4 @@ public class CustomerException extends RuntimeException{
 		// TODO Auto-generated constructor stub
 	}
 
-	
 }

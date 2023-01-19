@@ -29,7 +29,7 @@ public class Customer {
 	private String email;
 	private String mobile;
 	private String password;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
 	List<Booking> bookings = new ArrayList<>();
 }
