@@ -12,7 +12,7 @@
 
 <img  src="https://github.com/aks-samanta/EaseAmuse/blob/main/src/main/resources/static/amusement.png" alt="logo" align="center" >
 
-# ================ ER Diagram ===============
+# ============= ER Diagram ============
 <img src="https://github.com/aks-samanta/EaseAmuse/blob/main/src/main/resources/static/easeAmuseERD.png" alt="erd" align="center">
 </div>
 
