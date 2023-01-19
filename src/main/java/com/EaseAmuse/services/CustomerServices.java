@@ -1,13 +1,13 @@
 package com.EaseAmuse.services;
 
-import com.EaseAmuse.payloads.CustomerInputDTO;
-import com.EaseAmuse.payloads.CustomerOutputDTO;
+import com.EaseAmuse.payloads.CustomerInputDto;
+import com.EaseAmuse.payloads.CustomerOutputDto;
 
 public interface CustomerServices {
 
 	
-	CustomerOutputDTO registerCustomer(CustomerInputDTO customerDTO);
+	CustomerOutputDto registerCustomer(CustomerInputDto customerDTO);
 
-	CustomerOutputDTO getCustomerById(Integer customerId);
+	CustomerOutputDto getCustomerById(Integer customerId);
 
 }

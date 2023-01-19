@@ -27,7 +27,7 @@ public class Activity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer activityId;
-	private String activityName;
+	private String name;
 	private String description;
 	private Double charges;
 

@@ -11,5 +11,5 @@ import com.EaseAmuse.models.DailyActivity;
 public interface DailyActivityRepo extends JpaRepository<DailyActivity, Integer> {
 
 	List<DailyActivity> findByAmusementPark(AmusementPark amusementPark);
-	
+
 }

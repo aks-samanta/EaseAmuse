@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.EaseAmuse.payloads.CustomerInputDTO;
-import com.EaseAmuse.payloads.CustomerOutputDTO;
+import com.EaseAmuse.payloads.CustomerInputDto;
+import com.EaseAmuse.payloads.CustomerOutputDto;
 import com.EaseAmuse.services.CustomerServices;
 
 
@@ -29,16 +29,16 @@ public class CustomerController {
 	
 	
 	@PostMapping("/customer")
-	public ResponseEntity<CustomerOutputDTO> registerCustomer(@Valid @RequestBody CustomerInputDTO customerDTO){
+	public ResponseEntity<CustomerOutputDto> registerCustomer(@Valid @RequestBody CustomerInputDto customerDTO){
 		
-		return new ResponseEntity<CustomerOutputDTO>(this.customerServices.registerCustomer(customerDTO), HttpStatus.CREATED);
+		return new ResponseEntity<CustomerOutputDto>(this.customerServices.registerCustomer(customerDTO), HttpStatus.CREATED);
 	}
 	
 	
 	
 	@GetMapping("/customer/{customerId}")
-	public ResponseEntity<CustomerOutputDTO> getCustomerById(@PathVariable("customerId") Integer customerId){
+	public ResponseEntity<CustomerOutputDto> getCustomerById(@PathVariable("customerId") Integer customerId){
 		
-		return new ResponseEntity<CustomerOutputDTO>(this.customerServices.getCustomerById(customerId), HttpStatus.FOUND);
+		return new ResponseEntity<CustomerOutputDto>(this.customerServices.getCustomerById(customerId), HttpStatus.FOUND);
 	}
 }

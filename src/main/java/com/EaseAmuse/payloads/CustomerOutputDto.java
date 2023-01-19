@@ -3,7 +3,7 @@ package com.EaseAmuse.payloads;
 import lombok.Data;
 
 @Data
-public class CustomerOutputDTO {
+public class CustomerOutputDto {
 	
 	private Integer customerId;
 	private String customerName;
