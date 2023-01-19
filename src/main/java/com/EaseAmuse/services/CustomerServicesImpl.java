@@ -38,6 +38,27 @@ public class CustomerServicesImpl implements CustomerServices{
 		
 	}
 
+	@Override
+	public CustomerOutputDTO updateCustomer(Integer customerId, CustomerInputDTO customerDTO) throws CustomerException {
+		// TODO Auto-generated method stub
+		Customer foundCustomer =  this.customerRepo.findById(customerId).orElseThrow(() -> new CustomerException("customer not found"));
+		
+		foundCustomer.setCustomerName(customerDTO.getCustomerName());
+		foundCustomer.setEmail(customerDTO.getEmail());
+		foundCustomer.setMobile(customerDTO.getMobile());
+		foundCustomer.setPassword(customerDTO.getPassword());
+		
+		Customer updatedCustomer = this.customerRepo.save(foundCustomer);
+		
+		return this.modelMapper.map(updatedCustomer, CustomerOutputDTO.class);
+	}
+
+	@Override
+	public CustomerOutputDTO deleteCustomer(Integer customerId) throws CustomerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }
