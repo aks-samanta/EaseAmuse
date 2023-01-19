@@ -1,17 +1,23 @@
 package com.EaseAmuse.services;
 
+import java.util.List;
+
 import com.EaseAmuse.exceptions.CustomerException;
-import com.EaseAmuse.payloads.CustomerInputDTO;
-import com.EaseAmuse.payloads.CustomerOutputDTO;
+import com.EaseAmuse.payloads.CustomerInputDto;
+import com.EaseAmuse.payloads.CustomerOutputDto;
 
 public interface CustomerServices {
-
 	
-	CustomerOutputDTO registerCustomer(CustomerInputDTO customerDTO);
-
-	CustomerOutputDTO getCustomerById(Integer customerId) throws CustomerException;
+	CustomerOutputDto registerCustomer(CustomerInputDto customerDTO);
 	
-	CustomerOutputDTO updateCustomer(Integer customerId, CustomerInputDTO customerDTO) throws CustomerException;
+	CustomerOutputDto getCustomerById(Integer customerId) throws CustomerException;
 	
-	CustomerOutputDTO deleteCustomer(Integer customerId) throws CustomerException;
+	CustomerOutputDto updateCustomer(Integer customerId, CustomerInputDto customerDTO) throws CustomerException;
+	
+	CustomerOutputDto deleteCustomer(Integer customerId) throws CustomerException;
+	
+	List<CustomerOutputDto> getCustomersDetails() throws CustomerException;
+	
+	CustomerOutputDto getValidateCustomer(String userName, String password) throws CustomerException;
+	
 }
