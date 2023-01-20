@@ -8,4 +8,5 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 
 	public Customer findByEmail(String email);
 
+	
 }
