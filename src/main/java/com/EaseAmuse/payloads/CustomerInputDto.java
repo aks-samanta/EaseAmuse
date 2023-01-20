@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CustomerInputDTO {
+public class CustomerInputDto {
 
 	@NotEmpty
 	@Size(min = 3, max = 30, message = "Customer name length should be 3 to 30 characters long")
