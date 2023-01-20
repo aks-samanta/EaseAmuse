@@ -32,6 +32,7 @@ public class CustomerController {
 
 		return new ResponseEntity<CustomerOutputDto>(this.customerServices.registerCustomer(customerDTO),
 				HttpStatus.CREATED);
+
 	}
 
 	@GetMapping("/customer/{customerId}")
@@ -43,16 +44,18 @@ public class CustomerController {
 	}
 
 	@PutMapping("/customer/{customerId}")
-	public ResponseEntity<CustomerOutputDto> updateCustomer(@Valid @RequestBody CustomerInputDto customerInputDTO, @PathVariable("customerId") Integer customerId){
-		
-		return new ResponseEntity<CustomerOutputDto>(this.customerServices.updateCustomer(customerId, customerInputDTO), HttpStatus.OK);
+	public ResponseEntity<CustomerOutputDto> updateCustomer(@Valid @RequestBody CustomerInputDto customerInputDTO,
+			@PathVariable("customerId") Integer customerId) {
+
+		return new ResponseEntity<CustomerOutputDto>(this.customerServices.updateCustomer(customerId, customerInputDTO),
+				HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("customer/{customerId}")
-	public ResponseEntity<CustomerOutputDto> deleteCustomer(@Valid @RequestBody CustomerInputDto customerInputDTO, @PathVariable("customerId") Integer customerId){
-		
+	public ResponseEntity<CustomerOutputDto> deleteCustomer(@Valid @RequestBody CustomerInputDto customerInputDTO,
+			@PathVariable("customerId") Integer customerId) {
+
 		return new ResponseEntity<CustomerOutputDto>(this.customerServices.deleteCustomer(customerId), HttpStatus.OK);
 	}
-	
-	
+
 }

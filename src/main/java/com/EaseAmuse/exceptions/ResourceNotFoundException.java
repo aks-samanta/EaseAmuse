@@ -1,5 +1,10 @@
 package com.EaseAmuse.exceptions;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class ResourceNotFoundException extends RuntimeException {
 
 	String resourceName;
@@ -10,35 +15,11 @@ public class ResourceNotFoundException extends RuntimeException {
 
 	}
 
-	public ResourceNotFoundException(String resourceName, String feildName, String fieldValue) {
-		super(String.format("%s not found with %s : %s", resourceName, feildName, fieldValue));
+	public ResourceNotFoundException(String resourceName, String fieldName, String fieldValue) {
+		super(String.format("%s not found with %s : %s", resourceName, fieldName, fieldValue));
+
 		this.resourceName = resourceName;
-		this.fieldName = feildName;
+		this.fieldName = fieldName;
 		this.fieldValue = fieldValue;
 	}
-
-	public String getResourceName() {
-		return resourceName;
-	}
-
-	public void setResourceName(String resourceName) {
-		this.resourceName = resourceName;
-	}
-
-	public String getFeildName() {
-		return fieldName;
-	}
-
-	public void setFeildName(String feildName) {
-		this.fieldName = feildName;
-	}
-
-	public String getFieldValue() {
-		return fieldValue;
-	}
-
-	public void setFieldValue(String fieldValue) {
-		this.fieldValue = fieldValue;
-	}
-
 }

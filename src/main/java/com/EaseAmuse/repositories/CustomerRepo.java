@@ -4,7 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.EaseAmuse.models.Customer;
 
-public interface CustomerRepo extends JpaRepository<Customer, Integer>{
+public interface CustomerRepo extends JpaRepository<Customer, Integer> {
+
+	public Customer findByEmail(String email);
 
 	
 }

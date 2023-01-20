@@ -11,7 +11,7 @@ public class EaseAmuseApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EaseAmuseApplication.class, args);
 	}
-	
+
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
