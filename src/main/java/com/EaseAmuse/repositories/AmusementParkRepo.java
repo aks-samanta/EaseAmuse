@@ -9,5 +9,7 @@ import com.EaseAmuse.models.AmusementPark;
 public interface AmusementParkRepo extends JpaRepository<AmusementPark, Integer> {
 
 	List<AmusementPark> findByCity(String city);
+	
+	
 
 }

@@ -8,11 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 import com.EaseAmuse.models.Customer;
 import com.EaseAmuse.models.Ticket;
+import com.EaseAmuse.models.TicketStatus;
 
 public interface TicketRepo extends JpaRepository<Ticket, Integer> {
 
 	// to be used in bookingServiceImpl
-	@Query("SELECT t from Ticket t WHERE t.customer = :customer AND t.ticketStatus = 'PENDING'")
-	List<Ticket> findByCustomerAndTicketStatus(@Param("customer") Customer customer);
+	List<Ticket> findByCustomerAndTicketStatus(Customer customer, TicketStatus ts);
 
 }

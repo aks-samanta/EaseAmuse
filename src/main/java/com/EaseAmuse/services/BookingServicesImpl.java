@@ -48,7 +48,7 @@ public class BookingServicesImpl implements BookingServices {
 
 		Booking booking = new Booking();
 
-		List<Ticket> tickets = this.ticketRepo.findByCustomerAndTicketStatus(customer);
+		List<Ticket> tickets = this.ticketRepo.findByCustomerAndTicketStatus(customer, TicketStatus.PENDING);
 		Double totalPrice = 0.00;
 		for (Ticket ticket : tickets) {
 			totalPrice += ticket.getAmount();
