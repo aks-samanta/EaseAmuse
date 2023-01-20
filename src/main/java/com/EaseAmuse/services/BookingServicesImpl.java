@@ -44,7 +44,7 @@ public class BookingServicesImpl implements BookingServices {
 	public BookingDto createBooking(Integer customerId) throws ResourceNotFoundException {
 
 		Customer customer = this.customerRepo.findById(customerId)
-				.orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", customerId));
+				.orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", customerId.toString()));
 
 		Booking booking = new Booking();
 
@@ -68,7 +68,7 @@ public class BookingServicesImpl implements BookingServices {
 	@Override
 	public BookingDto getBookingById(Integer bookingId) throws ResourceNotFoundException {
 		Booking booking = this.bookingRepo.findById(bookingId)
-				.orElseThrow(() -> new ResourceNotFoundException("Booking", "Id", bookingId));
+				.orElseThrow(() -> new ResourceNotFoundException("Booking", "Id", bookingId.toString()));
 
 		List<TicketOutputDto> ticketDtos = booking.getTickets().stream()
 				.map((t) -> this.modelMapper.map(t, TicketOutputDto.class)).collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class BookingServicesImpl implements BookingServices {
 	public List<BookingDto> getAllBookingsOfCustomer(Integer customerId) throws ResourceNotFoundException {
 
 		Customer customer = this.customerRepo.findById(customerId)
-				.orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", customerId));
+				.orElseThrow(() -> new ResourceNotFoundException("Customer", "Id", customerId.toString()));
 
 		List<Booking> bookings = this.bookingRepo.findByCustomer(customer);
 
@@ -107,13 +107,13 @@ public class BookingServicesImpl implements BookingServices {
 	public BookingDto cancelBooking(Integer bookingId, Integer customerId) throws ResourceNotFoundException {
 
 		Booking booking = this.bookingRepo.findById(bookingId)
-				.orElseThrow(() -> new ResourceNotFoundException("Booking", "Id", bookingId));
+				.orElseThrow(() -> new ResourceNotFoundException("Booking", "Id", bookingId.toString()));
 
 		if (booking.getCustomer().getCustomerId() == customerId) {
 
 			booking.setBookingStatus(BookingStatus.CANCELLED);
 			List<Ticket> tickets = booking.getTickets();
-			
+
 			for (Ticket t : tickets) {
 				if (t.getDailyActivity().getActivityDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 						.isAfter(LocalDateTime.now().plusDays(1))) {
