@@ -27,7 +27,7 @@ public class AmusementPark {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer parkId;
-	private String parkName;
+	private String name;
 	private String city;
 	@OneToOne
 	@JoinColumn(name = "managerId")

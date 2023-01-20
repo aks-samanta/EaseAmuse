@@ -6,4 +6,5 @@ import com.EaseAmuse.models.Customer;
 
 public interface CustomerRepo extends JpaRepository<Customer, Integer>{
 
+	
 }

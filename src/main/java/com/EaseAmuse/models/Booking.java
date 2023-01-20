@@ -1,5 +1,6 @@
 package com.EaseAmuse.models;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -27,9 +28,10 @@ public class Booking {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookingId;
 	private Double totalPrice;
+	private LocalDateTime bookingDateTime;
 	private BookingStatus bookingStatus;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customerId")
 	private Customer customer;
 

@@ -25,6 +25,7 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ticketId;
 	private Double amount;
+	private Integer noOfPerson;
 
 	@ManyToOne
 	@JoinColumn(name = "customerId")

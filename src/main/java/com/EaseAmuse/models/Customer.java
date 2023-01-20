@@ -25,11 +25,11 @@ public class Customer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
-	private String customerName;
+	private String name;
 	private String email;
 	private String mobile;
 	private String password;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
+	@OneToMany(mappedBy = "customer")
 	List<Booking> bookings = new ArrayList<>();
 }

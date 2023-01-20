@@ -32,6 +32,7 @@ public class DailyActivity {
 	private Integer dailyActivityId;
 	private Integer slotsRemaining;
 	private Date activityDate;
+	private String name;
 
 	@ManyToOne
 	@JoinColumn(name = "activityId")
