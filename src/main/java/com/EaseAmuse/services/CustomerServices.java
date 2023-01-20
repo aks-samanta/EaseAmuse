@@ -17,8 +17,5 @@ public interface CustomerServices {
 	CustomerOutputDto deleteCustomer(Integer customerId) throws CustomerException;
 	
 	List<CustomerOutputDto> getCustomersDetails() throws CustomerException;
-	
-	
-	
 
 }
