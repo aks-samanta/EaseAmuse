@@ -21,10 +21,10 @@ public class Manager {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer managerId;
-	private String mangerName;
-	private String mangerPassword;
-	private String mangerEmail;
-	private String mangerMobile;
+	private String name;
+	private String password;
+	private String email;
+	private String mobile;
 	
 	@OneToOne
 	private AmusementPark amusementPark;
