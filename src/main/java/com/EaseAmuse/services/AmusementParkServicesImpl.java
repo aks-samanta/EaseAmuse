@@ -2,6 +2,7 @@ package com.EaseAmuse.services;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
@@ -14,11 +15,16 @@ public class AmusementParkServicesImpl implements AmusementParkServices {
 
 	@Autowired
 	private ManagerRepo managerRepo;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	@Override
 	public AmusementParkOutputDto createAmusementPark(AmusementParkInputDto ParkDto) {
-//		Manager manager = this.ma	
-
+		Manager manager = this.managerRepo.findById(ParkDto.getManagerId()).orElseThrow(() -> new ResourceNotFoundException("Customer", "customerId", ParkDto.getManagerId()));
+		
+//		this.mod
+		
 		return null;
 	}
 
