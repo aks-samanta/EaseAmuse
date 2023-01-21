@@ -6,8 +6,8 @@ import lombok.Data;
 public class ManagerOutputDto {
 	
 	private Integer managerId;
-	private String managerName;
-	private String managerEmail;
-	private String managerMobile;
+	private String name;
+	private String email;
+	private String mobile;
 
 }

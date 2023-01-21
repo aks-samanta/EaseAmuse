@@ -13,5 +13,4 @@ public class ActivityInputDto {
 	private String name;
 	private String description;
 	private Double charges;
-	private Integer amusementParkId;
 }
