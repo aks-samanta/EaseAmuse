@@ -1,88 +1,111 @@
 package com.EaseAmuse.services;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.EaseAmuse.exceptions.CustomerException;
+import com.EaseAmuse.exceptions.ResourceNotFoundException;
+import com.EaseAmuse.models.AmusementPark;
+import com.EaseAmuse.models.Customer;
 import com.EaseAmuse.models.DailyActivity;
 import com.EaseAmuse.models.Manager;
+import com.EaseAmuse.payloads.AmusementParkInputDto;
+import com.EaseAmuse.payloads.AmusementParkOutputDto;
+import com.EaseAmuse.payloads.CustomerOutputDto;
+import com.EaseAmuse.payloads.DailyActivityOutputDto;
+import com.EaseAmuse.payloads.ManagerInputDto;
+import com.EaseAmuse.payloads.ManagerOutputDto;
+import com.EaseAmuse.repositories.AmusementParkRepo;
 import com.EaseAmuse.repositories.DailyActivityRepo;
 import com.EaseAmuse.repositories.ManagerRepo;
 
 public class ManagerServicesImpl implements ManagerServices {
 	
 	@Autowired
-	ManagerRepo mRepo;
+	ManagerRepo managerRepo;
 	
 	@Autowired
-	DailyActivityRepo dRepo;
-
-	@Override
-	public Manager insertManager(Manager manager) {
+	DailyActivityRepo dailyActivityRepo;
 	
-		return mRepo.save(manager);
+	@Autowired
+	ModelMapper modelMapper;
+	
+	@Autowired
+	AmusementParkServices amusementParkServices;
+
+	@Override
+	public ManagerOutputDto insertManager(ManagerInputDto managerInpDto) throws ResourceNotFoundException {
+		
+		Manager manager = this.modelMapper.map(managerInpDto, Manager.class);
+		
+		Manager savedManager = this.managerRepo.save(manager);
+		
+		return this.modelMapper.map(savedManager, ManagerOutputDto.class);
+		
 	}
 
 	@Override
-	public Manager updateManager(Manager manager) {
+	public ManagerOutputDto updateManager(Integer managerId,ManagerInputDto managerInpDto) throws ResourceNotFoundException {
 		
-		Optional<Manager> opt = mRepo.findById(manager.getManagerId());
-		
-		if(opt.isPresent()) {
-			
-			Manager man = opt.get();
-			
-			Manager updated = mRepo.save(man);
-			
-			return updated;
-		}
-		return null;
+		Manager foundManager = this.managerRepo.findById(managerId)
+				.orElseThrow(() -> new ResourceNotFoundException("Manager","managerId",managerId.toString()));
+
+		foundManager.setName(managerInpDto.getMangerName());
+		foundManager.setEmail(managerInpDto.getMangerEmail());
+		foundManager.setMobile(managerInpDto.getMangerMobile());
+		foundManager.setPassword(managerInpDto.getMangerPassword());
+
+		Manager updatedManager = this.managerRepo.save(foundManager);
+
+		return this.modelMapper.map(updatedManager, ManagerOutputDto.class);
 	}
 
 	@Override
-	public Manager deleteManager(int mangerId) {
+	public ManagerOutputDto deleteManager(Integer managerId) throws ResourceNotFoundException {
 		
-		Optional<Manager> opt = mRepo.findById(mangerId);
-		
-		if(opt.isPresent()) {
-			
-			Manager man = opt.get();
-			
-			 mRepo.delete(man);
-			 
-			 return man;
-		}
-		
-		return null;
+		Manager foundManager = this.managerRepo.findById(managerId)
+				.orElseThrow(() -> new ResourceNotFoundException("Manager","managerId",managerId.toString()));
+
+		this.managerRepo.delete(foundManager);
+		return this.modelMapper.map(foundManager, ManagerOutputDto.class);
 	}
 
 	@Override
-	public List<DailyActivity> getAllDailyActivities() {
+	public AmusementParkOutputDto createAmusementPark(AmusementParkInputDto amusementParkInpDto) throws ResourceNotFoundException {
 		
-		return dRepo.findAll();
+	     return amusementParkServices.createAmusementPark(amusementParkInpDto);
+		
+		
 	}
 
 	@Override
-	public List<DailyActivity> getDailyActivitiesCustomerwise(int customerId) {
+	public List<DailyActivityOutputDto> getAllDailyActivities() throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DailyActivity> getDailyActivitiesDatewise(Date activityDate) {
+	public List<DailyActivityOutputDto> getDailyActivitiesCustomerwise(Integer customerId)
+			throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<DailyActivity> getAllActivitiesForDays(int customerId, LocalDateTime fromDate, LocalDateTime toDate) {
+	public List<DailyActivityOutputDto> getDailyActivitiesDatewise(Date activityDate) throws ResourceNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public List<DailyActivityOutputDto> getAllActivitiesForDays(Integer customerId, Date fromDate, Date toDate)throws ResourceNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-
+	
 }
