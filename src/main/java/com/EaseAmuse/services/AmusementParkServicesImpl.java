@@ -21,7 +21,7 @@ public class AmusementParkServicesImpl implements AmusementParkServices {
 
 	@Override
 	public AmusementParkOutputDto createAmusementPark(AmusementParkInputDto ParkDto) {
-		Manager manager = this.managerRepo.findById(ParkDto.getManagerId()).orElseThrow(() -> new ResourceNotFoundException("Customer", "customerId", ParkDto.getManagerId()));
+		Manager manager = this.managerRepo.findById(ParkDto.getManagerId()).orElseThrow(() -> new ResourceNotFoundException("Customer", "customerId", ParkDto.getManagerId().toString()));
 		
 //		this.mod
 		
