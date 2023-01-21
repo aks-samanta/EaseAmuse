@@ -12,7 +12,7 @@ import lombok.Setter;
 public class ActivityOutputDto {
 	
 	private Integer activityId;
-	private String activityName;
+	private String name;
 	private String description;
 	private Double charges;
 	private Integer amusementParkId;

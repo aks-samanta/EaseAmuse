@@ -113,7 +113,7 @@ public class BookingServicesImpl implements BookingServices {
 
 			booking.setBookingStatus(BookingStatus.CANCELLED);
 			List<Ticket> tickets = booking.getTickets();
-			
+
 			for (Ticket t : tickets) {
 				if (t.getDailyActivity().getActivityDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 						.isAfter(LocalDateTime.now().plusDays(1))) {
