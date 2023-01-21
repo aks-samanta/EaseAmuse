@@ -4,23 +4,32 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
+import com.EaseAmuse.exceptions.ResourceNotFoundException;
+import com.EaseAmuse.models.AmusementPark;
 import com.EaseAmuse.models.DailyActivity;
 import com.EaseAmuse.models.Manager;
+import com.EaseAmuse.payloads.AmusementParkInputDto;
+import com.EaseAmuse.payloads.AmusementParkOutputDto;
+import com.EaseAmuse.payloads.DailyActivityOutputDto;
+import com.EaseAmuse.payloads.ManagerInputDto;
+import com.EaseAmuse.payloads.ManagerOutputDto;
 
 public interface ManagerServices {
 	
-	public Manager insertManager(Manager manager);
+	public ManagerOutputDto insertManager(ManagerInputDto managerInpDto) throws ResourceNotFoundException;
 	
-	public Manager updateManager(Manager manager);
+	public ManagerOutputDto updateManager(Integer managerId ,ManagerInputDto managerInpDto)throws ResourceNotFoundException;
 	
-	public Manager deleteManager(int mangerId);
+	public ManagerOutputDto deleteManager(Integer managerId)throws ResourceNotFoundException;
 	
-	public List<DailyActivity> getAllDailyActivities();
+	public AmusementParkOutputDto createAmusementPark(AmusementParkInputDto amusementParkInpDto)throws ResourceNotFoundException;
 	
-	public List<DailyActivity> getDailyActivitiesCustomerwise(int customerId);
+	public List<DailyActivityOutputDto> getAllDailyActivities()throws ResourceNotFoundException;
 	
-	public List<DailyActivity> getDailyActivitiesDatewise(Date activityDate);
+	public List<DailyActivityOutputDto> getDailyActivitiesCustomerwise(Integer customerId)throws ResourceNotFoundException;
 	
-	public List<DailyActivity> getAllActivitiesForDays(int customerId,LocalDateTime fromDate,LocalDateTime toDate);
+	public List<DailyActivityOutputDto> getDailyActivitiesDatewise(Date activityDate)throws ResourceNotFoundException;
+	
+	public List<DailyActivityOutputDto> getAllActivitiesForDays(Integer customerId,Date fromDate,Date toDate)throws ResourceNotFoundException;
 
 }
