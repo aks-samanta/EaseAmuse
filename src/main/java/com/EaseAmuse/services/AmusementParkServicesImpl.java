@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
+import com.EaseAmuse.exceptions.UnauthorisedException;
 import com.EaseAmuse.models.AmusementPark;
 import com.EaseAmuse.models.Manager;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
@@ -63,7 +64,7 @@ public class AmusementParkServicesImpl implements AmusementParkServices {
 
 	@Override
 	public List<AmusementParkOutputDto> getAllAmusementParks() {
-		
+
 		List<AmusementPark> parks = this.amusementParkRepo.findAll();
 
 		List<AmusementParkOutputDto> parkDtos = parks.stream()
@@ -75,14 +76,34 @@ public class AmusementParkServicesImpl implements AmusementParkServices {
 	@Override
 	public AmusementParkOutputDto updateAmusementPark(Integer managerId, Integer parkId, AmusementParkInputDto parkDto)
 			throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Manager manager = this.managerRepo.findById(managerId)
+				.orElseThrow(() -> new ResourceNotFoundException("Manager", "Manager Id", managerId.toString()));
+
+		AmusementPark park = this.amusementParkRepo.findById(parkId)
+				.orElseThrow(() -> new ResourceNotFoundException("Amusement Park", "Park Id", parkId.toString()));
+
+		if (manager.getAmusementPark().getParkId() == park.getParkId()) {
+			park.setCity(parkDto.getCity());
+			park.setName(parkDto.getName());
+			AmusementPark updatedPark = this.amusementParkRepo.save(park);
+			return this.modelMapper.map(updatedPark, AmusementParkOutputDto.class);
+
+		} else {
+			throw new UnauthorisedException("You Are Not the manager of this Park so you cannot update this Park!");
+		}
+
 	}
 
 	@Override
 	public AmusementParkOutputDto removeAmusementpark(Integer parkId) throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		AmusementPark park = this.amusementParkRepo.findById(parkId)
+				.orElseThrow(() -> new ResourceNotFoundException("Amusement Park", "Park Id", parkId.toString()));
+
+		this.amusementParkRepo.delete(park);
+
+		return this.modelMapper.map(park, AmusementParkOutputDto.class);
+
 	}
 
 }
