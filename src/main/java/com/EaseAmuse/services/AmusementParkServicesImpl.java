@@ -40,6 +40,7 @@ public class AmusementParkServicesImpl implements AmusementParkServices {
 		this.managerRepo.save(manager);
 
 		return this.modelMapper.map(park, AmusementParkOutputDto.class);
+
 	}
 
 	@Override
