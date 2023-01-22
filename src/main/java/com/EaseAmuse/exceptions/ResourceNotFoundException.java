@@ -3,9 +3,8 @@ package com.EaseAmuse.exceptions;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
 @Setter
-
+@Getter
 public class ResourceNotFoundException extends RuntimeException {
 
 	String resourceName;

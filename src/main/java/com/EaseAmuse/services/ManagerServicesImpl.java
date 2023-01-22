@@ -3,6 +3,7 @@ package com.EaseAmuse.services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.ManagerInputDto;
 import com.EaseAmuse.payloads.ManagerOutputDto;
 import com.EaseAmuse.repositories.AmusementParkRepo;
+import com.EaseAmuse.repositories.CustomerRepo;
 import com.EaseAmuse.repositories.DailyActivityRepo;
 import com.EaseAmuse.repositories.ManagerRepo;
 
@@ -36,6 +38,9 @@ public class ManagerServicesImpl implements ManagerServices {
 	
 	@Autowired
 	AmusementParkServices amusementParkServices;
+	
+	@Autowired
+	CustomerRepo customerRepo;
 
 	@Override
 	public ManagerOutputDto insertManager(ManagerInputDto managerInpDto) throws ResourceNotFoundException {
@@ -54,10 +59,10 @@ public class ManagerServicesImpl implements ManagerServices {
 		Manager foundManager = this.managerRepo.findById(managerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Manager","managerId",managerId.toString()));
 
-		foundManager.setName(managerInpDto.getMangerName());
-		foundManager.setEmail(managerInpDto.getMangerEmail());
-		foundManager.setMobile(managerInpDto.getMangerMobile());
-		foundManager.setPassword(managerInpDto.getMangerPassword());
+		foundManager.setName(managerInpDto.getName());
+		foundManager.setEmail(managerInpDto.getEmail());
+		foundManager.setMobile(managerInpDto.getMobile());
+		foundManager.setPassword(managerInpDto.getPassword());
 
 		Manager updatedManager = this.managerRepo.save(foundManager);
 
@@ -84,21 +89,29 @@ public class ManagerServicesImpl implements ManagerServices {
 
 	@Override
 	public List<DailyActivityOutputDto> getAllDailyActivities() throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<DailyActivity> dailyActivities = dailyActivityRepo.findAll();
+		
+		return dailyActivities.stream().map((da)->this.modelMapper.map(da, DailyActivityOutputDto.class)).collect(Collectors.toList());
+		
+		
 	}
 
 	@Override
-	public List<DailyActivityOutputDto> getDailyActivitiesCustomerwise(Integer customerId)
-			throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
+	public List<DailyActivityOutputDto> getDailyActivitiesCustomerwise(Integer customerId) throws ResourceNotFoundException {
+		
 		return null;
+		
+		
 	}
 
 	@Override
 	public List<DailyActivityOutputDto> getDailyActivitiesDatewise(Date activityDate) throws ResourceNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<DailyActivity> activities = dailyActivityRepo.findByActivityDate(activityDate);
+		
+		return activities.stream().map((da)->this.modelMapper.map(da, DailyActivityOutputDto.class)).collect(Collectors.toList());
+
 	}
 
 	@Override
