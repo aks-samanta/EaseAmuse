@@ -117,7 +117,7 @@ public class BookingServicesImpl implements BookingServices {
 				if (t.getDailyActivity().getActivityDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
 						.isAfter(LocalDateTime.now().plusDays(1))) {
 
-					this.ticketService.cancelTicket(t);
+					this.ticketService.cancelTicket(customerId, t.getTicketId());
 				}
 
 			}
