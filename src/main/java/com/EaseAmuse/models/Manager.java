@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Manager {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer managerId;
 	private String name;
 	private String password;

@@ -11,6 +11,6 @@ public interface SessionRepo extends JpaRepository<CurrentUserSession, Integer> 
 
 	public CurrentUserSession findBySessionKey(String sessionKey);
 
-	public CurrentUserSession findByUserIdAndType(Integer userId, UserType userType);
+	public CurrentUserSession findByUserIdAndUserType(Integer userId, UserType userType);
 
 }

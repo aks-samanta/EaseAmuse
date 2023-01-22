@@ -126,7 +126,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public String logOut(Integer userId, UserType userType) throws LoginException {
 
-		CurrentUserSession session = sessionRepo.findByUserIdAndType(userId, userType);
+		CurrentUserSession session = sessionRepo.findByUserIdAndUserType(userId, userType);
 
 		if (session == null) {
 			throw new LoginException("No " + userType.name() + "logged in with User ID " + userId);
