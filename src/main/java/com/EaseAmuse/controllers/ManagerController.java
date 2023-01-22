@@ -31,6 +31,7 @@ import com.EaseAmuse.repositories.SessionRepo;
 import com.EaseAmuse.services.ActivityServices;
 import com.EaseAmuse.services.AmusementParkServices;
 import com.EaseAmuse.services.ManagerServices;
+import com.EaseAmuse.services.SessionServices;
 
 @RestController
 @RequestMapping("/managers")
@@ -44,10 +45,9 @@ public class ManagerController {
 
 	@Autowired
 	private AmusementParkServices parkServices;
-	
+
 	@Autowired
-	private SessionRepo sessionRepo;
-	
+	private SessionServices sessionServices;
 
 	@PostMapping("/")
 	public ResponseEntity<ManagerOutputDto> createManager(@Valid @RequestBody ManagerInputDto managerDto) {
@@ -76,38 +76,59 @@ public class ManagerController {
 		return new ResponseEntity<>(this.managerServices.deleteManager(managerId), HttpStatus.OK);
 	}
 
+	
 	@GetMapping("/dailyActivities/")
 	public ResponseEntity<List<DailyActivityOutputDto>> getAllDailyActivities(@RequestParam("session") String uuid) {
-		Integer managerId = 2;
-		CurrentUserSession currentUserSession = this.sessionRepo.findBySessionKey(uuid);
-		if(currentUserSession.getUserType() == UserType.MANAGER) {
-			return new ResponseEntity<>(this.managerServices.getAllDailyActivities(currentUserSession.getUserId()), HttpStatus.OK);
-		}
-		else {
+		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
+		if (currentUserSession.getUserType() == UserType.MANAGER) {
+			return new ResponseEntity<>(this.managerServices.getAllDailyActivities(currentUserSession.getUserId()),
+					HttpStatus.OK);
+		} else {
 			throw new UnauthorisedException("Sorry ! You are not authorised to access this method!!");
 		}
-		
+
 	}
 
 	@GetMapping("/activities/")
-	public ResponseEntity<List<ActivityOutputDto>> getAllActivities() {
-		Integer managerId = 2;
-		return new ResponseEntity<List<ActivityOutputDto>>(this.managerServices.getAllActivities(managerId),
-				HttpStatus.FOUND);
+	public ResponseEntity<List<ActivityOutputDto>> getAllActivities(@RequestParam("session") String uuid) {
+
+		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
+
+		if (currentUserSession.getUserType() == UserType.MANAGER) {
+
+			return new ResponseEntity<List<ActivityOutputDto>>(
+					this.managerServices.getAllActivities(currentUserSession.getUserId()), HttpStatus.FOUND);
+
+		} else {
+			throw new UnauthorisedException("Sorry ! You are not authorised to access this method!!");
+		}
 	}
 
 	@PostMapping("/activities/")
-	public ResponseEntity<ActivityOutputDto> addActivity(ActivityInputDto activityDto) {
-		Integer managerId = 2;
-		return new ResponseEntity<ActivityOutputDto>(this.managerServices.createActivity(managerId, activityDto),
-				HttpStatus.CREATED);
+	public ResponseEntity<ActivityOutputDto> addActivity(@RequestParam("session") String uuid,
+			ActivityInputDto activityDto) {
+
+		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
+
+		if (currentUserSession.getUserType() == UserType.MANAGER) {
+			return new ResponseEntity<ActivityOutputDto>(
+					this.managerServices.createActivity(currentUserSession.getUserId(), activityDto),
+					HttpStatus.CREATED);
+		} else {
+			throw new UnauthorisedException("Sorry ! You are not authorised to access this method!!");
+		}
 	}
 
 	@GetMapping("/amusementPark/")
-	public ResponseEntity<AmusementParkOutputDto> getAmusementPark() {
-		Integer managerid = 2;
-		return new ResponseEntity<AmusementParkOutputDto>(this.managerServices.getAmusementPark(managerid),
-				HttpStatus.FOUND);
+	public ResponseEntity<AmusementParkOutputDto> getAmusementPark(@RequestParam("session") String uuid) {
+		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
+
+		if (currentUserSession.getUserType() == UserType.MANAGER) {
+			return new ResponseEntity<AmusementParkOutputDto>(
+					this.managerServices.getAmusementPark(currentUserSession.getUserId()), HttpStatus.FOUND);
+		} else {
+			throw new UnauthorisedException("Sorry ! You are not authorised to access this method!!");
+		}
 	}
 
 }
