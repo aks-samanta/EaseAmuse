@@ -10,8 +10,8 @@ import lombok.Setter;
 public class ManagerOutputDto {
 	
 	private Integer mangerId;
-	private String mangerName;
-	private String mangerEmail;
-	private String mangerMobile;
+	private String name;
+	private String email;
+	private String mobile;
 	
 }
