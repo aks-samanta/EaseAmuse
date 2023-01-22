@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.EaseAmuse.exceptions.LoginException;
 import com.EaseAmuse.models.CurrentUserSession;
@@ -15,6 +16,8 @@ import com.EaseAmuse.models.UserType;
 import com.EaseAmuse.payloads.LoginDto;
 import com.EaseAmuse.services.LoginService;
 
+
+@RestController
 public class LoginController {
 
 	@Autowired

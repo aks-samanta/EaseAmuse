@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.LoginException;
 import com.EaseAmuse.models.Admin;
@@ -19,6 +20,8 @@ import com.EaseAmuse.repositories.SessionRepo;
 
 import net.bytebuddy.utility.RandomString;
 
+
+@Service
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
@@ -126,7 +129,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public String logOut(Integer userId, UserType userType) throws LoginException {
 
-		CurrentUserSession session = sessionRepo.findByUserIdAndType(userId, userType);
+		CurrentUserSession session = sessionRepo.findByUserIdAndUserType(userId, userType);
 
 		if (session == null) {
 			throw new LoginException("No " + userType.name() + "logged in with User ID " + userId);
