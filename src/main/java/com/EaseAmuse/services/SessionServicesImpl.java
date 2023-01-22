@@ -1,11 +1,13 @@
 package com.EaseAmuse.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
 import com.EaseAmuse.models.CurrentUserSession;
 import com.EaseAmuse.repositories.SessionRepo;
 
+@Service
 public class SessionServicesImpl implements SessionServices {
 
 	@Autowired

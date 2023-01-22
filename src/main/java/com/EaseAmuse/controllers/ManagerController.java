@@ -24,6 +24,7 @@ import com.EaseAmuse.payloads.ActivityInputDto;
 import com.EaseAmuse.payloads.ActivityOutputDto;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
+import com.EaseAmuse.payloads.DailyActivityInputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.ManagerInputDto;
 import com.EaseAmuse.payloads.ManagerOutputDto;
@@ -76,6 +77,11 @@ public class ManagerController {
 		return new ResponseEntity<>(this.managerServices.deleteManager(managerId), HttpStatus.OK);
 	}
 
+	@PostMapping("/dailyActivity/")
+	public ResponseEntity<DailyActivityOutputDto> createDailyActivity (@Valid @RequestBody DailyActivityInputDto dailyActivityInputDto,){
+		
+	}
+	
 	@GetMapping("/dailyActivities/")
 	public ResponseEntity<List<DailyActivityOutputDto>> getAllDailyActivities(@RequestParam("session") String uuid) {
 		Integer managerId = 2;

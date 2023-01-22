@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	public ResponseEntity<MyErrorDetails> allExceprionHandler(ResourceNotFoundException ex) {
+	public ResponseEntity<MyErrorDetails> allExceprionHandler(Exception ex) {
 		String message = ex.getMessage();
 
 		MyErrorDetails errorDetails = new MyErrorDetails(message, false, LocalDateTime.now());
