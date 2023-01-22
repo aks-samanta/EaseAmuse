@@ -3,7 +3,6 @@ package com.EaseAmuse.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,7 +28,7 @@ public class Customer {
 	private String email;
 	private String mobile;
 	private String password;
-	
+
 	@OneToMany(mappedBy = "customer")
 	List<Booking> bookings = new ArrayList<>();
 }
