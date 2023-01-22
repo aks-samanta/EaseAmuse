@@ -22,6 +22,7 @@ import com.EaseAmuse.payloads.ActivityOutputDto;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
 import com.EaseAmuse.payloads.CustomerOutputDto;
+import com.EaseAmuse.payloads.DailyActivityInputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.ManagerInputDto;
 import com.EaseAmuse.payloads.ManagerOutputDto;
@@ -181,6 +182,32 @@ public class ManagerServicesImpl implements ManagerServices {
 				.orElseThrow(() -> new ResourceNotFoundException("Manager", "Manager Id", managerId.toString()));
 
 		return this.modelMapper.map(manager.getAmusementPark(), AmusementParkOutputDto.class);
+
+	}
+
+	@Override
+	public DailyActivityOutputDto createDailyActivity(Integer managerId, Integer activityId,
+			DailyActivityInputDto dailyActivityDto) throws ResourceNotFoundException {
+
+		Manager manager = this.managerRepo.findById(managerId)
+				.orElseThrow(() -> new ResourceNotFoundException("Manager", "Manager Id", managerId.toString()));
+
+		Activity activity = this.activityRepo.findById(activityId)
+				.orElseThrow(() -> new ResourceNotFoundException("Activity", "Activity Id", activityId.toString()));
+
+		DailyActivity dailyActivity = this.modelMapper.map(dailyActivityDto, DailyActivity.class);
+		dailyActivity.setActivity(activity);
+		dailyActivity.setAmusementPark(manager.getAmusementPark());
+		dailyActivity.setName(activity.getName());
+
+		activity.getDailyActivities().add(dailyActivity);
+
+		Activity updatedActivity = this.activityRepo.save(activity);
+
+		DailyActivity savedDailyActivity = updatedActivity.getDailyActivities()
+				.get(updatedActivity.getDailyActivities().size() - 1);
+
+		return this.modelMapper.map(savedDailyActivity, DailyActivityOutputDto.class);
 
 	}
 
