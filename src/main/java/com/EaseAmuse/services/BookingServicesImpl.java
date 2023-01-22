@@ -67,17 +67,21 @@ public class BookingServicesImpl implements BookingServices {
 	}
 
 	@Override
-	public BookingDto getBookingById(Integer bookingId) throws ResourceNotFoundException {
+	public BookingDto getBookingById(Integer customerId, Integer bookingId) throws ResourceNotFoundException {
 		Booking booking = this.bookingRepo.findById(bookingId)
 				.orElseThrow(() -> new ResourceNotFoundException("Booking", "Id", bookingId.toString()));
 
-		List<TicketOutputDto> ticketDtos = booking.getTickets().stream()
-				.map((t) -> this.modelMapper.map(t, TicketOutputDto.class)).collect(Collectors.toList());
+		if (booking.getCustomer().getCustomerId() == customerId) {
+			List<TicketOutputDto> ticketDtos = booking.getTickets().stream()
+					.map((t) -> this.modelMapper.map(t, TicketOutputDto.class)).collect(Collectors.toList());
 
-		BookingDto bookingDto = this.bookingToDto(booking);
-		bookingDto.setTicketDtos(ticketDtos);
+			BookingDto bookingDto = this.bookingToDto(booking);
+			bookingDto.setTicketDtos(ticketDtos);
 
-		return bookingDto;
+			return bookingDto;
+		} else {
+			throw new UnauthorisedException("You can only view your Bookings ! check your booking Id!");
+		}
 
 	}
 
