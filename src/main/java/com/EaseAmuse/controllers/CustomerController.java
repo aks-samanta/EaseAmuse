@@ -21,11 +21,13 @@ import com.EaseAmuse.exceptions.UnauthorisedException;
 import com.EaseAmuse.models.Booking;
 import com.EaseAmuse.models.CurrentUserSession;
 import com.EaseAmuse.models.UserType;
+import com.EaseAmuse.payloads.AmusementParkOutputDto;
 import com.EaseAmuse.payloads.BookingDto;
 import com.EaseAmuse.payloads.CustomerInputDto;
 import com.EaseAmuse.payloads.CustomerOutputDto;
 import com.EaseAmuse.payloads.TicketInputDto;
 import com.EaseAmuse.payloads.TicketOutputDto;
+import com.EaseAmuse.services.AmusementParkServices;
 import com.EaseAmuse.services.BookingServices;
 import com.EaseAmuse.services.CustomerServices;
 import com.EaseAmuse.services.SessionServices;
@@ -47,6 +49,22 @@ public class CustomerController {
 	@Autowired
 	private TicketServices ticketServices;
 
+	@Autowired
+	private AmusementParkServices parkServices; 
+	
+	@GetMapping("/amusementPark/{city}")
+	public ResponseEntity<List<AmusementParkOutputDto>> getAmusementParksByCity(@Valid @RequestParam("Session") String uuid, @PathVariable("city") String city){
+		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
+
+		if (currentUserSession.getUserType() == UserType.CUSTOMER) {
+			return new ResponseEntity<List<AmusementParkOutputDto>>(this.parkServices.getAmusementParksByCity(city), HttpStatus.FOUND);
+		}
+		else {
+			throw new UnauthorisedException("Sorry you are not authorised.");
+
+		}
+	}
+	
 	@PostMapping("/customer")
 	public ResponseEntity<CustomerOutputDto> registerCustomer(@Valid @RequestBody CustomerInputDto customerDTO) {
 

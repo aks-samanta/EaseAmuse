@@ -1,6 +1,7 @@
 package com.EaseAmuse.payloads;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.EaseAmuse.models.BookingStatus;
@@ -22,6 +23,6 @@ public class BookingDto {
 	private BookingStatus bookingStatus;
 	private Integer customerId;
 	private String customerName;
-	private List<TicketOutputDto> ticketDtos;
+	private List<TicketOutputDto> ticketDtos = new ArrayList<>();
 
 }

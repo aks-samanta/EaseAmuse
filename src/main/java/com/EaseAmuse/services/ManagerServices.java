@@ -12,6 +12,7 @@ import com.EaseAmuse.payloads.ActivityInputDto;
 import com.EaseAmuse.payloads.ActivityOutputDto;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
+import com.EaseAmuse.payloads.DailyActivityInputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.ManagerInputDto;
 import com.EaseAmuse.payloads.ManagerOutputDto;
@@ -30,17 +31,18 @@ public interface ManagerServices {
 
 	public List<DailyActivityOutputDto> getAllDailyActivities(Integer managerId) throws ResourceNotFoundException;
 
-	public List<DailyActivityOutputDto> getDailyActivitiesCustomerwise( Integer customerId)
+	public List<DailyActivityOutputDto> getDailyActivitiesCustomerwise(Integer customerId)
 			throws ResourceNotFoundException;
 
-	public List<DailyActivityOutputDto> getDailyActivitiesDatewise(Integer managerId, Date activityDate) throws ResourceNotFoundException;
-	
-	
+	public List<DailyActivityOutputDto> getDailyActivitiesDatewise(Integer managerId, Date activityDate)
+			throws ResourceNotFoundException;
+
 	public List<ActivityOutputDto> getAllActivities(Integer managerId) throws ResourceNotFoundException;
 
-	
 	public ActivityOutputDto createActivity(Integer managerId, ActivityInputDto activityDto);
-	
 
 	public AmusementParkOutputDto getAmusementPark(Integer managerId);
+
+	public DailyActivityOutputDto createDailyActivity(Integer managerId, Integer activityId,
+			DailyActivityInputDto dailyActivityDto) throws ResourceNotFoundException;
 }

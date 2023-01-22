@@ -36,15 +36,14 @@ public class TicketServicesImpl implements TicketServices {
 
 		Ticket foundTicket = this.ticketRepo.findById(ticketId)
 				.orElseThrow(() -> new ResourceNotFoundException("Ticket", "Ticket ID", ticketId.toString()));
-		
-		if(foundTicket.getCustomer().getCustomerId() == customerId) {
+
+		if (foundTicket.getCustomer().getCustomerId() == customerId) {
 			foundTicket.setTicketStatus(TicketStatus.CANCELLED);
 
-		}
-		else {
+		} else {
 			throw new UnauthorisedException("You are only authorosed to cancel your tickets !");
 		}
-		
+
 		this.dailyActivityRepo.save(foundTicket.getDailyActivity());
 
 		return this.modelMapper.map(foundTicket, TicketOutputDto.class);
@@ -72,9 +71,9 @@ public class TicketServicesImpl implements TicketServices {
 		DailyActivity updateDailyActivity = this.dailyActivityRepo.save(dailyActivity);
 
 		Ticket savedTicket = updateDailyActivity.getTickets().get(updateDailyActivity.getTickets().size() - 1);
-
-		return this.modelMapper.map(savedTicket, TicketOutputDto.class);
-
+		TicketOutputDto ticketOutputDto = this.modelMapper.map(savedTicket, TicketOutputDto.class);
+		ticketOutputDto.setDailyActivitiesId(dailyActivity.getDailyActivityId());
+		return ticketOutputDto;
 	}
 
 }
