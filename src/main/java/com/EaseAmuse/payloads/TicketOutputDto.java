@@ -16,7 +16,7 @@ public class TicketOutputDto {
 	private Integer ticketId;
 	private Double amount;
 	private Integer noOfPerson;
-	private Integer dailyActivityId;
+	private Integer dailyActivitiesId;
 	private String dailyActivityName;
 	private TicketStatus ticketStatus;
 }
