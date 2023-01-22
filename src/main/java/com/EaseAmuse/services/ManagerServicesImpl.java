@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.CustomerException;
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
@@ -26,6 +27,7 @@ import com.EaseAmuse.repositories.CustomerRepo;
 import com.EaseAmuse.repositories.DailyActivityRepo;
 import com.EaseAmuse.repositories.ManagerRepo;
 
+@Service
 public class ManagerServicesImpl implements ManagerServices {
 
 	@Autowired
