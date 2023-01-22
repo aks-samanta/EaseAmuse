@@ -2,6 +2,7 @@ package com.EaseAmuse.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
 import com.EaseAmuse.exceptions.UnauthorisedException;
@@ -15,6 +16,7 @@ import com.EaseAmuse.repositories.CustomerRepo;
 import com.EaseAmuse.repositories.DailyActivityRepo;
 import com.EaseAmuse.repositories.TicketRepo;
 
+@Service
 public class TicketServicesImpl implements TicketServices {
 
 	@Autowired

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
 import com.EaseAmuse.exceptions.UnauthorisedException;
@@ -22,6 +23,7 @@ import com.EaseAmuse.repositories.BookingRepo;
 import com.EaseAmuse.repositories.CustomerRepo;
 import com.EaseAmuse.repositories.TicketRepo;
 
+@Service
 public class BookingServicesImpl implements BookingServices {
 
 	@Autowired

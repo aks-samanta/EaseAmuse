@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import com.EaseAmuse.models.CurrentUserSession;
 import com.EaseAmuse.models.UserType;
 
-@Repository
+
 public interface SessionRepo extends JpaRepository<CurrentUserSession, Integer> {
 
 	public CurrentUserSession findBySessionKey(String sessionKey);
 
-	public CurrentUserSession findByUserIdAndType(Integer userId, UserType userType);
+	public CurrentUserSession findByUserIdAndUserType(Integer userId, UserType userType);
 
 }

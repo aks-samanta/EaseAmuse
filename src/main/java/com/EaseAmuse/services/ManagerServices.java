@@ -8,6 +8,8 @@ import com.EaseAmuse.exceptions.ResourceNotFoundException;
 import com.EaseAmuse.models.AmusementPark;
 import com.EaseAmuse.models.DailyActivity;
 import com.EaseAmuse.models.Manager;
+import com.EaseAmuse.payloads.ActivityInputDto;
+import com.EaseAmuse.payloads.ActivityOutputDto;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
@@ -32,5 +34,13 @@ public interface ManagerServices {
 			throws ResourceNotFoundException;
 
 	public List<DailyActivityOutputDto> getDailyActivitiesDatewise(Integer managerId, Date activityDate) throws ResourceNotFoundException;
+	
+	
+	public List<ActivityOutputDto> getAllActivities(Integer managerId) throws ResourceNotFoundException;
 
+	
+	public ActivityOutputDto createActivity(Integer managerId, ActivityInputDto activityDto);
+	
+
+	public AmusementParkOutputDto getAmusementPark(Integer managerId);
 }
