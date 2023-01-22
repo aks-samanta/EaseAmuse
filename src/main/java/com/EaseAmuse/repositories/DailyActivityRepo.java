@@ -19,4 +19,6 @@ public interface DailyActivityRepo extends JpaRepository<DailyActivity, Integer>
 	List<DailyActivity> findByActivity(Activity activity);
 
 	List<DailyActivity> findByAmusementParkAndActivityDate(AmusementPark park, Date date);
+	
+	List<DailyActivity> findByActivityDateBetween(Date fromDate, Date toDate);
 }
