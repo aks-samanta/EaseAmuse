@@ -16,5 +16,5 @@ public class DailyActivityInputDto {
 	private Integer slotsRemaining;
 	private Date activityDate;
 	private Integer activityId;
-	
+
 }

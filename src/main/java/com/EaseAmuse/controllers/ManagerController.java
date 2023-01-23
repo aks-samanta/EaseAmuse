@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +27,6 @@ import com.EaseAmuse.payloads.DailyActivityInputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.ManagerInputDto;
 import com.EaseAmuse.payloads.ManagerOutputDto;
-import com.EaseAmuse.repositories.SessionRepo;
 import com.EaseAmuse.services.ActivityServices;
 import com.EaseAmuse.services.AmusementParkServices;
 import com.EaseAmuse.services.ManagerServices;
