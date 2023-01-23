@@ -50,8 +50,12 @@ public class BookingServicesImpl implements BookingServices {
 		Booking booking = new Booking();
 
 		List<Ticket> tickets = this.ticketRepo.findByCustomerAndTicketStatus(customer, TicketStatus.PENDING);
+		if(tickets.size() == 0) {
+			throw new ResourceNotFoundException("Tickets", "Ticket Status", "PENDING");
+		}
 		Double totalPrice = 0.00;
 		for (Ticket ticket : tickets) {
+			ticket.setTicketStatus(TicketStatus.BOOKED);
 			totalPrice += ticket.getAmount();
 		}
 		booking.setTotalPrice(totalPrice);
@@ -61,24 +65,35 @@ public class BookingServicesImpl implements BookingServices {
 		booking.setBookingStatus(BookingStatus.CONFIRMED);
 		booking.setBookingDateTime(LocalDateTime.now());
 
-		Booking newBooking = this.bookingRepo.save(booking);
+		List<TicketOutputDto> ticketDtos = tickets.stream().map((t) -> {
+			TicketOutputDto tDto = this.modelMapper.map(t, TicketOutputDto.class);
+			tDto.setDailyActivitiesId(t.getDailyActivity().getDailyActivityId());
+			return tDto;
+		}).collect(Collectors.toList());
 
-		return this.bookingToDto(newBooking);
+		Booking confirmedBooking = this.bookingRepo.save(booking);
+		BookingDto bookingDto = this.modelMapper.map(confirmedBooking, BookingDto.class);
+		bookingDto.setTicketDtos(ticketDtos);
+		return bookingDto;
+
 	}
 
 	@Override
-	public BookingDto getBookingById(Integer bookingId) throws ResourceNotFoundException {
+	public BookingDto getBookingById(Integer customerId, Integer bookingId) throws ResourceNotFoundException {
 		Booking booking = this.bookingRepo.findById(bookingId)
 				.orElseThrow(() -> new ResourceNotFoundException("Booking", "Id", bookingId.toString()));
+		if (booking.getCustomer().getCustomerId() == customerId) {
 
-		List<TicketOutputDto> ticketDtos = booking.getTickets().stream()
-				.map((t) -> this.modelMapper.map(t, TicketOutputDto.class)).collect(Collectors.toList());
+			List<TicketOutputDto> ticketDtos = booking.getTickets().stream()
+					.map((t) -> this.modelMapper.map(t, TicketOutputDto.class)).collect(Collectors.toList());
 
-		BookingDto bookingDto = this.bookingToDto(booking);
-		bookingDto.setTicketDtos(ticketDtos);
+			BookingDto bookingDto = this.bookingToDto(booking);
+			bookingDto.setTicketDtos(ticketDtos);
 
-		return bookingDto;
-
+			return bookingDto;
+		} else {
+			throw new UnauthorisedException("you can only view your bookings");
+		}
 	}
 
 	@Override
