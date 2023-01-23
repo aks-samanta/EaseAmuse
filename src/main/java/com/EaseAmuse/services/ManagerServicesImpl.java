@@ -185,30 +185,5 @@ public class ManagerServicesImpl implements ManagerServices {
 
 	}
 
-	@Override
-	public DailyActivityOutputDto createDailyActivity(Integer managerId, Integer activityId,
-			DailyActivityInputDto dailyActivityDto) throws ResourceNotFoundException {
-
-		Manager manager = this.managerRepo.findById(managerId)
-				.orElseThrow(() -> new ResourceNotFoundException("Manager", "Manager Id", managerId.toString()));
-
-		Activity activity = this.activityRepo.findById(activityId)
-				.orElseThrow(() -> new ResourceNotFoundException("Activity", "Activity Id", activityId.toString()));
-
-		DailyActivity dailyActivity = this.modelMapper.map(dailyActivityDto, DailyActivity.class);
-		dailyActivity.setActivity(activity);
-		dailyActivity.setAmusementPark(manager.getAmusementPark());
-		dailyActivity.setName(activity.getName());
-
-		activity.getDailyActivities().add(dailyActivity);
-
-		Activity updatedActivity = this.activityRepo.save(activity);
-
-		DailyActivity savedDailyActivity = updatedActivity.getDailyActivities()
-				.get(updatedActivity.getDailyActivities().size() - 1);
-
-		return this.modelMapper.map(savedDailyActivity, DailyActivityOutputDto.class);
-
-	}
 
 }
