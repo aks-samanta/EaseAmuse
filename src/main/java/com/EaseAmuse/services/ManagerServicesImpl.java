@@ -22,6 +22,7 @@ import com.EaseAmuse.payloads.ActivityOutputDto;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
 import com.EaseAmuse.payloads.CustomerOutputDto;
+import com.EaseAmuse.payloads.DailyActivityInputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.ManagerInputDto;
 import com.EaseAmuse.payloads.ManagerOutputDto;
@@ -183,5 +184,7 @@ public class ManagerServicesImpl implements ManagerServices {
 		return this.modelMapper.map(manager.getAmusementPark(), AmusementParkOutputDto.class);
 
 	}
+
+	
 
 }
