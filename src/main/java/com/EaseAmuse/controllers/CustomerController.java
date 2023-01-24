@@ -25,6 +25,7 @@ import com.EaseAmuse.payloads.AmusementParkOutputDto;
 import com.EaseAmuse.payloads.BookingDto;
 import com.EaseAmuse.payloads.CustomerInputDto;
 import com.EaseAmuse.payloads.CustomerOutputDto;
+import com.EaseAmuse.payloads.DailyActivityOutputDto;
 import com.EaseAmuse.payloads.TicketInputDto;
 import com.EaseAmuse.payloads.TicketOutputDto;
 import com.EaseAmuse.services.AmusementParkServices;
@@ -50,21 +51,36 @@ public class CustomerController {
 	private TicketServices ticketServices;
 
 	@Autowired
-	private AmusementParkServices parkServices; 
-	
+	private AmusementParkServices parkServices;
+
 	@GetMapping("/amusementPark/{city}")
-	public ResponseEntity<List<AmusementParkOutputDto>> getAmusementParksByCity(@Valid @RequestParam("Session") String uuid, @PathVariable("city") String city){
+	public ResponseEntity<List<AmusementParkOutputDto>> getAmusementParksByCity(
+			@Valid @RequestParam("Session") String uuid, @PathVariable("city") String city) {
 		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
 
 		if (currentUserSession.getUserType() == UserType.CUSTOMER) {
-			return new ResponseEntity<List<AmusementParkOutputDto>>(this.parkServices.getAmusementParksByCity(city), HttpStatus.FOUND);
-		}
-		else {
+			return new ResponseEntity<List<AmusementParkOutputDto>>(this.parkServices.getAmusementParksByCity(city),
+					HttpStatus.FOUND);
+		} else {
 			throw new UnauthorisedException("Sorry you are not authorised.");
 
 		}
 	}
-	
+
+	@GetMapping("/customer/dailyActivity/{parkId}")
+	public ResponseEntity<List<DailyActivityOutputDto>> getDailyActivityOfPark(
+			@Valid @RequestParam("Session") String uuid, @PathVariable("parkId") Integer parkId) {
+		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
+
+		if (currentUserSession.getUserType() == UserType.CUSTOMER) {
+			return new ResponseEntity<List<DailyActivityOutputDto>>(
+					this.customerServices.getDailyActivityOfPark(parkId), HttpStatus.FOUND);
+		} else {
+			throw new UnauthorisedException("Sorry you are not authorised.");
+
+		}
+	}
+
 	@PostMapping("/customer")
 	public ResponseEntity<CustomerOutputDto> registerCustomer(@Valid @RequestBody CustomerInputDto customerDTO) {
 
