@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.CustomerException;
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
+import com.EaseAmuse.exceptions.UnauthorisedException;
 import com.EaseAmuse.models.Activity;
 import com.EaseAmuse.models.AmusementPark;
 import com.EaseAmuse.models.Customer;
@@ -185,5 +186,34 @@ public class ManagerServicesImpl implements ManagerServices {
 
 	}
 
+	@Override
+	public DailyActivityOutputDto createDailyActivity(Integer managerId, Integer activityId,
+			DailyActivityInputDto dailyActivityDto) throws ResourceNotFoundException {
+
+		Manager manager = this.managerRepo.findById(managerId)
+				.orElseThrow(() -> new ResourceNotFoundException("Manager", "Manager Id", managerId.toString()));
+
+		Activity activity = this.activityRepo.findById(activityId)
+				.orElseThrow(() -> new ResourceNotFoundException("Activity", "Activity Id", activityId.toString()));
+
+		if (activity.getAmusementPark().getParkId() == manager.getAmusementPark().getParkId()) {
+			DailyActivity dailyActivity = this.modelMapper.map(dailyActivityDto, DailyActivity.class);
+
+			dailyActivity.setActivity(activity);
+			dailyActivity.setAmusementPark(manager.getAmusementPark());
+			activity.getDailyActivities().add(dailyActivity);
+
+			manager.getAmusementPark().getDailyActivities().add(dailyActivity);
+
+			AmusementPark park = this.parkRepo.save(manager.getAmusementPark());
+
+			return this.modelMapper.map(park.getDailyActivities().get(park.getDailyActivities().size() - 1),
+					DailyActivityOutputDto.class);
+
+		} else {
+			throw new UnauthorisedException("This Activity does not belong to your Amusement Park!");
+		}
+
+	}
 
 }
