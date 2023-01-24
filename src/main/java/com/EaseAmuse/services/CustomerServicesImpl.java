@@ -2,15 +2,20 @@ package com.EaseAmuse.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.CustomerException;
+import com.EaseAmuse.exceptions.ResourceNotFoundException;
+import com.EaseAmuse.models.AmusementPark;
 import com.EaseAmuse.models.Customer;
 import com.EaseAmuse.payloads.CustomerInputDto;
 import com.EaseAmuse.payloads.CustomerOutputDto;
+import com.EaseAmuse.payloads.DailyActivityOutputDto;
+import com.EaseAmuse.repositories.AmusementParkRepo;
 import com.EaseAmuse.repositories.CustomerRepo;
 
 @Service
@@ -21,6 +26,9 @@ public class CustomerServicesImpl implements CustomerServices {
 
 	@Autowired
 	private CustomerRepo customerRepo;
+
+	@Autowired
+	private AmusementParkRepo amusementParkRepo;
 
 	@Override
 	public CustomerOutputDto registerCustomer(CustomerInputDto customerDTO) {
@@ -80,13 +88,22 @@ public class CustomerServicesImpl implements CustomerServices {
 
 		List<CustomerOutputDto> listOfDtos = new ArrayList<>();
 		for (Customer customer : lc) {
-			listOfDtos.add(new CustomerOutputDto(customer.getCustomerId(), customer.getName(),
-					customer.getEmail(), customer.getMobile()));
+			listOfDtos.add(new CustomerOutputDto(customer.getCustomerId(), customer.getName(), customer.getEmail(),
+					customer.getMobile()));
 		}
 
 		return listOfDtos;
 		// return this.modelMapper.map(listOfDtos, CustomerOutputDTO.class);
 	}
 
-	
+	@Override
+	public List<DailyActivityOutputDto> getDailyActivityOfPark(Integer parkId) {
+		AmusementPark park = this.amusementParkRepo.findById(parkId)
+				.orElseThrow(() -> new ResourceNotFoundException("Park", "ParkID", parkId.toString()));
+
+		return park.getDailyActivities().stream().map((da) -> this.modelMapper.map(da, DailyActivityOutputDto.class))
+				.collect((Collectors.toList()));
+
+	}
+
 }

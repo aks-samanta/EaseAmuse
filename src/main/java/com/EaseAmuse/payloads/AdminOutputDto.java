@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AdminOutputDto {
 
-	private Integer mangerId;
+	private Integer adminId;
 	private String name;
 	private String email;
 	private String mobile;
