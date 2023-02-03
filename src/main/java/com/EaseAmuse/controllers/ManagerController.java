@@ -80,13 +80,14 @@ public class ManagerController {
 		}
 	}
 
-	@PostMapping("/dailyActivity/{activityId}")
+	@PostMapping("/dailyActivity/")
 	public ResponseEntity<DailyActivityOutputDto> createDailyActivity(@RequestParam("session") String uuid,
-			@Valid @RequestBody DailyActivityInputDto dailyActivityInputDto, Integer activityId) {
+			@Valid @RequestBody DailyActivityInputDto dailyActivityInputDto) {
 		CurrentUserSession currentUserSession = this.sessionServices.getSessionByKey(uuid);
 		if (currentUserSession.getUserType() == UserType.MANAGER) {
-			return new ResponseEntity<>(this.managerServices.createDailyActivity(currentUserSession.getUserId(),
-					activityId, dailyActivityInputDto), HttpStatus.OK);
+			return new ResponseEntity<>(
+					this.managerServices.createDailyActivity(currentUserSession.getUserId(), dailyActivityInputDto),
+					HttpStatus.OK);
 		} else {
 			throw new UnauthorisedException("Sorry ! You are not authorised to access this method!!");
 		}

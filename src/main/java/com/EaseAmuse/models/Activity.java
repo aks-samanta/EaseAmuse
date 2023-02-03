@@ -35,6 +35,6 @@ public class Activity {
 	@JoinColumn(name = "parkId")
 	private AmusementPark amusementPark;
 
-	@OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "activity", cascade = CascadeType.MERGE)
 	private List<DailyActivity> dailyActivities = new ArrayList<>();
 }

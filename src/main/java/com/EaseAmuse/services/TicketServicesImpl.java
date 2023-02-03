@@ -38,15 +38,22 @@ public class TicketServicesImpl implements TicketServices {
 				.orElseThrow(() -> new ResourceNotFoundException("Ticket", "Ticket ID", ticketId.toString()));
 
 		if (foundTicket.getCustomer().getCustomerId() == customerId) {
+			if(foundTicket.getTicketStatus() == TicketStatus.CANCELLED) {
+				throw new UnauthorisedException("Ticket Already Cancelled");
+			}
 			foundTicket.setTicketStatus(TicketStatus.CANCELLED);
 
 		} else {
 			throw new UnauthorisedException("You are only authorosed to cancel your tickets !");
 		}
 
-		this.dailyActivityRepo.save(foundTicket.getDailyActivity());
+		foundTicket.getDailyActivity()
+				.setSlotsRemaining(foundTicket.getDailyActivity().getSlotsRemaining() + foundTicket.getNoOfPerson());
 
-		return this.modelMapper.map(foundTicket, TicketOutputDto.class);
+		this.dailyActivityRepo.save(foundTicket.getDailyActivity());
+		TicketOutputDto toutDto = this.modelMapper.map(foundTicket, TicketOutputDto.class);
+		toutDto.setDailyActivitiesId(foundTicket.getDailyActivity().getDailyActivityId());
+		return toutDto;
 	}
 
 	@Override
@@ -59,21 +66,26 @@ public class TicketServicesImpl implements TicketServices {
 		Customer customer = this.customerRepo.findById(customerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Customer", "customer ID", customerId.toString()));
 
-		Ticket newTicket = new Ticket();
-		newTicket.setAmount(dailyActivity.getActivity().getCharges() * ticketDto.getNoOfPerson());
-		newTicket.setDailyActivity(dailyActivity);
-		newTicket.setNoOfPerson(ticketDto.getNoOfPerson());
-		newTicket.setTicketStatus(TicketStatus.PENDING);
-		newTicket.setCustomer(customer);
+		if (dailyActivity.getSlotsRemaining() >= ticketDto.getNoOfPerson()) {
 
-		dailyActivity.getTickets().add(newTicket);
+			Ticket newTicket = new Ticket();
+			newTicket.setAmount(dailyActivity.getActivity().getCharges() * ticketDto.getNoOfPerson());
+			newTicket.setDailyActivity(dailyActivity);
+			newTicket.setNoOfPerson(ticketDto.getNoOfPerson());
+			newTicket.setTicketStatus(TicketStatus.PENDING);
+			newTicket.setCustomer(customer);
 
-		DailyActivity updateDailyActivity = this.dailyActivityRepo.save(dailyActivity);
+			dailyActivity.setSlotsRemaining(dailyActivity.getSlotsRemaining() - ticketDto.getNoOfPerson());
+			dailyActivity.getTickets().add(newTicket);
 
-		Ticket savedTicket = updateDailyActivity.getTickets().get(updateDailyActivity.getTickets().size() - 1);
-		TicketOutputDto ticketOutputDto = this.modelMapper.map(savedTicket, TicketOutputDto.class);
-		ticketOutputDto.setDailyActivitiesId(dailyActivity.getDailyActivityId());
-		return ticketOutputDto;
+			DailyActivity updateDailyActivity = this.dailyActivityRepo.save(dailyActivity);
+
+			Ticket savedTicket = updateDailyActivity.getTickets().get(updateDailyActivity.getTickets().size() - 1);
+			TicketOutputDto ticketOutputDto = this.modelMapper.map(savedTicket, TicketOutputDto.class);
+			ticketOutputDto.setDailyActivitiesId(dailyActivity.getDailyActivityId());
+			return ticketOutputDto;
+		} else {
+			throw new UnauthorisedException("Available slots is less than " + ticketDto.getNoOfPerson());
+		}
 	}
-
 }

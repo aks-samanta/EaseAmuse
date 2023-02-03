@@ -43,6 +43,6 @@ public interface ManagerServices {
 
 	public AmusementParkOutputDto getAmusementPark(Integer managerId);
 
-	public DailyActivityOutputDto createDailyActivity(Integer managerId, Integer activityId,
-			DailyActivityInputDto dailyActivityDto) throws ResourceNotFoundException;
+	public DailyActivityOutputDto createDailyActivity(Integer managerId, DailyActivityInputDto dailyActivityDto)
+			throws ResourceNotFoundException;
 }
