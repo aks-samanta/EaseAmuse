@@ -187,27 +187,37 @@ public class ManagerServicesImpl implements ManagerServices {
 	}
 
 	@Override
-	public DailyActivityOutputDto createDailyActivity(Integer managerId, Integer activityId,
+	public DailyActivityOutputDto createDailyActivity(Integer managerId,
 			DailyActivityInputDto dailyActivityDto) throws ResourceNotFoundException {
 
 		Manager manager = this.managerRepo.findById(managerId)
 				.orElseThrow(() -> new ResourceNotFoundException("Manager", "Manager Id", managerId.toString()));
 
-		Activity activity = this.activityRepo.findById(activityId)
-				.orElseThrow(() -> new ResourceNotFoundException("Activity", "Activity Id", activityId.toString()));
+		Activity activity = this.activityRepo.findById(dailyActivityDto.getActivityId())
+				.orElseThrow(() -> new ResourceNotFoundException("Activity", "Activity Id", dailyActivityDto.getActivityId().toString()));
 
+		AmusementPark park = this.parkRepo.findById(manager.getAmusementPark().getParkId())
+				.orElseThrow(() -> new ResourceNotFoundException("Amusement Park", "Park Id",
+						manager.getAmusementPark().getParkId().toString()));
+		
+//System.out.println(park.getParkId());
+		
 		if (activity.getAmusementPark().getParkId() == manager.getAmusementPark().getParkId()) {
 			DailyActivity dailyActivity = this.modelMapper.map(dailyActivityDto, DailyActivity.class);
 
 			dailyActivity.setActivity(activity);
-			dailyActivity.setAmusementPark(manager.getAmusementPark());
+			dailyActivity.setName(activity.getName());
 			activity.getDailyActivities().add(dailyActivity);
+			dailyActivity.setAmusementPark(park);
+			park.getDailyActivities().add(dailyActivity);
+			
 
-			manager.getAmusementPark().getDailyActivities().add(dailyActivity);
-
-			AmusementPark park = this.parkRepo.save(manager.getAmusementPark());
-
-			return this.modelMapper.map(park.getDailyActivities().get(park.getDailyActivities().size() - 1),
+			
+//			System.out.println(this.dailyActivityRepo.save(dailyActivity).getDailyActivityId());
+			
+			AmusementPark savedPark = this.parkRepo.save(park);
+			System.out.println(savedPark.getDailyActivities().get(savedPark.getDailyActivities().size() - 1).getDailyActivityId());
+			return this.modelMapper.map(savedPark.getDailyActivities().get(savedPark.getDailyActivities().size() - 1),
 					DailyActivityOutputDto.class);
 
 		} else {
