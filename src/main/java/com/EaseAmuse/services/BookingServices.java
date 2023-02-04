@@ -12,7 +12,8 @@ public interface BookingServices {
 	BookingDto createBooking(Integer customerId) throws ResourceNotFoundException;
 
 	// readById
-	BookingDto getBookingById(Integer customerId,Integer bookingId) throws ResourceNotFoundException;
+	BookingDto getBookingById(Integer customerId, Integer bookingId) throws ResourceNotFoundException;
+
 
 	// readAll
 	List<BookingDto> getAllBookingsOfCustomer(Integer customerId) throws ResourceNotFoundException;

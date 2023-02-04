@@ -92,7 +92,7 @@ public class BookingServicesImpl implements BookingServices {
 
 			return bookingDto;
 		} else {
-			throw new UnauthorisedException("you can only view your bookings");
+			throw new UnauthorisedException("You can only view your Bookings ! check your booking Id!");
 		}
 	}
 
