@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.EaseAmuse.exceptions.UnauthorisedException;
-import com.EaseAmuse.models.Booking;
 import com.EaseAmuse.models.CurrentUserSession;
 import com.EaseAmuse.models.UserType;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;

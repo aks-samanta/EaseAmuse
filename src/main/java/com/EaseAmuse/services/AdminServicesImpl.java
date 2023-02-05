@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.EaseAmuse.exceptions.ResourceNotFoundException;
 import com.EaseAmuse.models.Admin;
-import com.EaseAmuse.models.Manager;
 import com.EaseAmuse.payloads.ActivityInputDto;
 import com.EaseAmuse.payloads.ActivityOutputDto;
 import com.EaseAmuse.payloads.AdminInputDto;
@@ -17,13 +16,11 @@ import com.EaseAmuse.payloads.AdminOutputDto;
 import com.EaseAmuse.payloads.AmusementParkInputDto;
 import com.EaseAmuse.payloads.AmusementParkOutputDto;
 import com.EaseAmuse.payloads.DailyActivityOutputDto;
-import com.EaseAmuse.payloads.ManagerOutputDto;
 import com.EaseAmuse.repositories.ActivityRepo;
 import com.EaseAmuse.repositories.AdminRepo;
 import com.EaseAmuse.repositories.AmusementParkRepo;
 import com.EaseAmuse.repositories.CustomerRepo;
 import com.EaseAmuse.repositories.DailyActivityRepo;
-import com.EaseAmuse.repositories.ManagerRepo;
 
 @Service
 public class AdminServicesImpl implements AdminServices {
@@ -62,7 +59,7 @@ public class AdminServicesImpl implements AdminServices {
 
 	@Override
 	public AdminOutputDto updateAdmin(Integer adminId, AdminInputDto adminInpDto) throws ResourceNotFoundException {
-		
+
 		Admin foundAdmin = this.adminRepo.findById(adminId)
 				.orElseThrow(() -> new ResourceNotFoundException("Admin", "adminId", adminId.toString()));
 
@@ -74,7 +71,7 @@ public class AdminServicesImpl implements AdminServices {
 		Admin updatedAdmin = this.adminRepo.save(foundAdmin);
 
 		return this.modelMapper.map(updatedAdmin, AdminOutputDto.class);
-		
+
 	}
 
 	@Override
