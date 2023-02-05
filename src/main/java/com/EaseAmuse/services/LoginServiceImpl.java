@@ -134,7 +134,8 @@ public class LoginServiceImpl implements LoginService {
 		if (session == null) {
 			throw new LoginException("No " + userType.name() + "logged in with User ID " + userId);
 		}
-
+		
+		sessionRepo.delete(session);
 		return "Logged Out Successfully !";
 
 	}
